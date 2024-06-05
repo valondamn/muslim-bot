@@ -20,7 +20,7 @@ def get_products():
     connection = connect_to_db()
     if connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT product_id, name, price, image FROM products")
+        cursor.execute("SELECT product_id, name, price FROM products")
         products = cursor.fetchall()
         cursor.close()
         connection.close()
@@ -61,8 +61,7 @@ async def products(update: Update, context: CallbackContext) -> None:
             product_id = product[0]
             name = product[1]
             price = product[2]
-            image = product[3]
-            response += f"{product_id}. {name}: {price} руб.\n{image}\n\n"
+            response += f"{product_id}. {name}: {price} руб."
     else:
         response = "Произошла ошибка при получении списка товаров из базы данных."
     await update.message.reply_text(response)
